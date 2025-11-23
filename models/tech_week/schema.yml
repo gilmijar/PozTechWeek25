@@ -4,24 +4,86 @@ version: 2
 sources:
   - name: landing
     tables:
-      - name: rental
-      - name: car
-
-models:
-  - name: my_first_dbt_model
-    description: "A starter dbt model"
-    columns:
-        - name: id
-          description: "The primary key for this table"
-          tests:
+      - name: store
+        columns:
+          - name: store_id
+            data_tests:
               - unique
               - not_null
+      - name: address
+        columns:
+          - name: address_id
+            data_tests:
+              - unique
+              - not_null
+      - name: customer
+        columns:
+          - name: customer_id
+            data_tests:
+              - unique
+              - not_null
+      - name: payment
+        columns:
+          - name: payment_id
+            data_tests:
+              - unique
+              - not_null
+          # Business says each payment is for 1 rental
+          - name: rental_id
+            data_tests:
+              - unique
+              - not_null
+      - name: staff
+        columns:
+          - name: staff_id
+            data_tests:
+              - unique
+              - not_null
+      - name: country
+        columns:
+          - name: country_id
+            data_tests:
+              - unique
+              - not_null
+      - name: car
+        columns:
+          - name: car_id
+            data_tests:
+              - unique
+              - not_null
+      - name: inventory
+        columns:
+          - name: inventory_id
+            data_tests:
+              - unique
+              - not_null
+      - name: rental
+        columns:
+          - name: rental_id
+            data_tests:
+              - unique
+              - not_null
+      - name: equipment
+        columns:
+          - name: equipment_id
+            data_tests:
+              - unique
+              - not_null
+      - name: city
+        columns:
+          - name: city_id
+            data_tests:
+              - unique
+              - not_null
+      - name: inventory_equipment
+      
 
-  - name: my_second_dbt_model
-    description: "A starter dbt model"
+models:
+  - name: int_rental
+    description: "precursor to fact"
     columns:
-        - name: id
-          description: "The primary key for this table"
+        - name: rental_id
+          description: "Main business key"
           tests:
               - unique
               - not_null
