@@ -1,6 +1,22 @@
 
 version: 2
 
+models:
+  - name: int_rental
+    description: "precursor to fact"
+    columns:
+        - name: rental_id
+          description: "Main business key"
+          data_tests:
+              - unique
+              - not_null
+        - name: inventory_id
+          data_tests:
+            - fast_distinct_check:
+                arguments: 
+                  target_count: 1194
+
+
 sources:
   - name: landing
     tables:
@@ -77,13 +93,3 @@ sources:
               - not_null
       - name: inventory_equipment
       
-
-models:
-  - name: int_rental
-    description: "precursor to fact"
-    columns:
-        - name: rental_id
-          description: "Main business key"
-          tests:
-              - unique
-              - not_null
