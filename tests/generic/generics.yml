@@ -1,0 +1,11 @@
+version: 2
+
+macros:
+  - name: test_fast_distinct_check
+    description: A cardinality test using fast, approximate counting. Fails if approximate count differs from target by more than 4%
+    arguments:
+      - name: model
+      - name: column_name
+      - name: target_count
+        description: expected number of distinct values
+        
