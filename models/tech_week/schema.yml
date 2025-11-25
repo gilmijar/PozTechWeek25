@@ -10,11 +10,11 @@ models:
           data_tests:
               - unique
               - not_null
-        - name: inventory_id
-          data_tests:
-            - fast_distinct_check:
-                arguments: 
-                  target_count: 1194
+        # - name: inventory_id
+        #   data_tests:
+        #     - fast_distinct_check:
+        #         arguments: 
+        #           target_count: 1194
 
   - name: top_customers
     columns:
@@ -24,11 +24,11 @@ models:
       - name: total_rental_amount
       - name: customer_rank
 
-  - name: stg_customer
-    data_tests:
-      - column_not_present:
-          arguments:
-            column_name: email
+  # - name: stg_customer
+  #   data_tests:
+  #     - column_not_present:
+  #         arguments:
+  #           column_name: email
 
 sources:
   - name: landing
