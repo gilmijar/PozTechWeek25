@@ -24,6 +24,12 @@ models:
       - name: total_rental_amount
       - name: customer_rank
 
+  - name: stg_customer
+    data_tests:
+      - column_not_present:
+          arguments:
+            column_name: email
+
 sources:
   - name: landing
     tables:
