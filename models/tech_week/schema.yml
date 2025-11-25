@@ -16,6 +16,19 @@ models:
                 arguments: 
                   target_count: 1194
 
+  - name: top_customers
+    columns:
+      - name: customer_id
+      - name: customer_name
+      - name: customers.birth_year
+      - name: total_rental_amount
+      - name: customer_rank
+
+  # - name: stg_customer
+  #   data_tests:
+  #     - column_not_present:
+  #         arguments:
+  #           column_name: email
 
 sources:
   - name: landing
@@ -93,3 +106,50 @@ sources:
               - not_null
       - name: inventory_equipment
       
+unit_tests:
+  - name: test_top_customers_looks_at_amounts_not_row_count
+    description: "We can't afford to **not** see our top clients"
+    model: top_customers
+    given:
+      - input: ref('stg_customer')
+        rows:
+          - {customer_id: 1, first_name: John, last_name: Doe}
+          - {customer_id: 2, first_name: John, last_name: Doe}
+          - {customer_id: 3, first_name: John, last_name: Doe}
+          - {customer_id: 4, first_name: John, last_name: Doe}
+          - {customer_id: 5, first_name: John, last_name: Doe}
+          - {customer_id: 6, first_name: John, last_name: Doe}
+          - {customer_id: 7, first_name: John, last_name: Doe}
+          - {customer_id: 8, first_name: John, last_name: Doe}
+          - {customer_id: 9, first_name: John, last_name: Doe}
+          - {customer_id: 10, first_name: John, last_name: Doe}
+          - {customer_id: 11, first_name: John, last_name: Doe}
+          - {customer_id: 12, first_name: John, last_name: Doe}
+
+      - input: ref('int_rental')
+        rows:
+          - {customer_id: 1, rental_amount: 100}
+          - {customer_id: 2, rental_amount: 100}
+          - {customer_id: 3, rental_amount: 21}
+          - {customer_id: 4, rental_amount: 20}
+          - {customer_id: 5, rental_amount: 19}
+          - {customer_id: 6, rental_amount: 18}
+          - {customer_id: 7, rental_amount: 17}
+          - {customer_id: 8, rental_amount: 16}
+          - {customer_id: 9, rental_amount: 15}
+          - {customer_id: 10, rental_amount: 14}
+          - {customer_id: 11, rental_amount: 13}
+          - {customer_id: 12, rental_amount: 12}
+    expect:
+      rows:
+        - {customer_id: 1, total_rental_amount: 100}
+        - {customer_id: 2, total_rental_amount: 100}
+        - {customer_id: 3, total_rental_amount: 21}
+        - {customer_id: 4, total_rental_amount: 20}
+        - {customer_id: 5, total_rental_amount: 19}
+        - {customer_id: 6, total_rental_amount: 18}
+        - {customer_id: 7, total_rental_amount: 17}
+        - {customer_id: 8, total_rental_amount: 16}
+        - {customer_id: 9, total_rental_amount: 15}
+        - {customer_id: 10, total_rental_amount: 14}
+        - {customer_id: 11, total_rental_amount: 13}
