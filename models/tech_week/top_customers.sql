@@ -22,4 +22,4 @@ with
         , total_rental_amount
         from customers
         join rental using(customer_id)
-        qualify rank() over (order by total_rental_amount desc) <= 10  -- fails unit_test
+        qualify dense_rank() over (order by total_rental_amount desc) <= 10  -- fails unit_test

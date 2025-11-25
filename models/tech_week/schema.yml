@@ -10,11 +10,11 @@ models:
           data_tests:
               - unique
               - not_null
-        # - name: inventory_id
-        #   data_tests:
-        #     - fast_distinct_check:
-        #         arguments: 
-        #           target_count: 1194
+        - name: inventory_id
+          data_tests:
+            - fast_distinct_check:
+                arguments: 
+                  target_count: 1194
 
   - name: top_customers
     columns:
