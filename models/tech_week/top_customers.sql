@@ -20,8 +20,6 @@ with
         , customer_name
         , customers.birth_year
         , total_rental_amount
-        , rank() over (order by total_rental_amount desc) customer_rank
         from customers
         join rental using(customer_id)
-        qualify rank() over (order by total_rental_amount desc) <= 10
-
+        qualify rank() over (order by total_rental_amount desc) <= 10  -- fails unit_test
