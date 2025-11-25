@@ -16,6 +16,13 @@ models:
                 arguments: 
                   target_count: 1194
 
+  - name: top_customers
+    columns:
+      - name: customer_id
+      - name: customer_name
+      - name: customers.birth_year
+      - name: total_rental_amount
+      - name: customer_rank
 
 sources:
   - name: landing
@@ -93,3 +100,24 @@ sources:
               - not_null
       - name: inventory_equipment
       
+unit_tests:
+  - name: test_top_customers_ranks_returns_at_least_10_results
+    description: "
+    model: dim_customers
+    given:
+      - input: ref('stg_customers')
+        rows:
+          - {email: cool@example.com,    email_top_level_domain: example.com}
+          - {email: cool@unknown.com,    email_top_level_domain: unknown.com}
+          - {email: badgmail.com,        email_top_level_domain: gmail.com}
+          - {email: missingdot@gmailcom, email_top_level_domain: gmail.com}
+      - input: ref('top_level_email_domains')
+        rows:
+          - {tld: example.com}
+          - {tld: gmail.com}
+    expect:
+      rows:
+        - {email: cool@example.com,    is_valid_email_address: true}
+        - {email: cool@unknown.com,    is_valid_email_address: false}
+        - {email: badgmail.com,        is_valid_email_address: false}
+        - {email: missingdot@gmailcom, is_valid_email_address: false}
