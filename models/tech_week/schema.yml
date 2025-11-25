@@ -101,23 +101,49 @@ sources:
       - name: inventory_equipment
       
 unit_tests:
-  - name: test_top_customers_ranks_returns_at_least_10_results
-    description: "
-    model: dim_customers
+  - name: test_top_customers_looks_at_amounts_not_row_count
+    description: "We can't afford to **not** see our top clients"
+    model: top_customers
     given:
-      - input: ref('stg_customers')
+      - input: ref('stg_customer')
         rows:
-          - {email: cool@example.com,    email_top_level_domain: example.com}
-          - {email: cool@unknown.com,    email_top_level_domain: unknown.com}
-          - {email: badgmail.com,        email_top_level_domain: gmail.com}
-          - {email: missingdot@gmailcom, email_top_level_domain: gmail.com}
-      - input: ref('top_level_email_domains')
+          - {customer_id: 1, first_name: John, last_name: Doe}
+          - {customer_id: 2, first_name: John, last_name: Doe}
+          - {customer_id: 3, first_name: John, last_name: Doe}
+          - {customer_id: 4, first_name: John, last_name: Doe}
+          - {customer_id: 5, first_name: John, last_name: Doe}
+          - {customer_id: 6, first_name: John, last_name: Doe}
+          - {customer_id: 7, first_name: John, last_name: Doe}
+          - {customer_id: 8, first_name: John, last_name: Doe}
+          - {customer_id: 9, first_name: John, last_name: Doe}
+          - {customer_id: 10, first_name: John, last_name: Doe}
+          - {customer_id: 11, first_name: John, last_name: Doe}
+          - {customer_id: 12, first_name: John, last_name: Doe}
+
+      - input: ref('int_rental')
         rows:
-          - {tld: example.com}
-          - {tld: gmail.com}
+          - {customer_id: 1, rental_amount: 1}
+          - {customer_id: 2, rental_amount: 1}
+          - {customer_id: 3, rental_amount: 12}
+          - {customer_id: 4, rental_amount: 13}
+          - {customer_id: 5, rental_amount: 14}
+          - {customer_id: 6, rental_amount: 15}
+          - {customer_id: 7, rental_amount: 16}
+          - {customer_id: 8, rental_amount: 17}
+          - {customer_id: 9, rental_amount: 18}
+          - {customer_id: 10, rental_amount: 19}
+          - {customer_id: 11, rental_amount: 20}
+          - {customer_id: 12, rental_amount: 21}
     expect:
       rows:
-        - {email: cool@example.com,    is_valid_email_address: true}
-        - {email: cool@unknown.com,    is_valid_email_address: false}
-        - {email: badgmail.com,        is_valid_email_address: false}
-        - {email: missingdot@gmailcom, is_valid_email_address: false}
+        - {customer_id: 1, total_rental_amount: 1}
+        - {customer_id: 2, total_rental_amount: 1}
+        - {customer_id: 3, total_rental_amount: 12}
+        - {customer_id: 4, total_rental_amount: 13}
+        - {customer_id: 5, total_rental_amount: 14}
+        - {customer_id: 6, total_rental_amount: 15}
+        - {customer_id: 7, total_rental_amount: 16}
+        - {customer_id: 8, total_rental_amount: 17}
+        - {customer_id: 9, total_rental_amount: 18}
+        - {customer_id: 10, total_rental_amount: 19}
+        - {customer_id: 11, total_rental_amount: 20}

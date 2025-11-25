@@ -15,7 +15,7 @@ with
         group by all
     )
 
-    select 
+    select
         customer_id
         , customer_name
         , customers.birth_year
