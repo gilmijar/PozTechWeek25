@@ -40,6 +40,7 @@ flags:
 # using the `{{ config(...) }}` macro.
 
 models:
+  +concurrent_batches: False
   PozTechWeek:
     # Applies to all files under models/example/
     tech_week:
