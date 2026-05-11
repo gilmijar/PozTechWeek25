@@ -152,3 +152,6 @@ unit_tests:
         - {customer_id: 8, total_rental_amount: 16}
         - {customer_id: 9, total_rental_amount: 50}
         - {customer_id: 10, total_rental_amount: 14}
+        - {customer_id: 9, total_rental_amount: 15}
+        - {customer_id: 10, total_rental_amount: 14}
+        - {customer_id: 11, total_rental_amount: 13}
