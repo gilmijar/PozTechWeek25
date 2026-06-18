@@ -16,7 +16,7 @@ with country as (
 , address as (
     select
         address_id
-        , address || address2
+        , address || address2 as customer_address
         , postal_code
         , city_id
     from {{ source("landing", "address") }}
