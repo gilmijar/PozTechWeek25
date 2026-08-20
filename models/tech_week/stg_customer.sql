@@ -3,6 +3,7 @@ select
     , first_name
     , last_name
     , address_id
+    -- the change
     , email
     , birth_date
     , create_date
